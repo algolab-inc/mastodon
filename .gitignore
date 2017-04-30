@@ -28,6 +28,7 @@ neo4j/
 .vagrant/
 
 # Ignore Capistrano customizations
+config/deploy
 config/deploy/*
 
 # Ignore IDE files

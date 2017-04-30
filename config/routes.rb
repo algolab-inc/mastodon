@@ -68,6 +68,7 @@ Rails.application.routes.draw do
 
   resources :media, only: [:show]
   resources :tags,  only: [:show]
+  resources :fans,  only: [:show]
 
   # Remote follow
   get  :authorize_follow, to: 'authorize_follow#new'
@@ -124,6 +125,7 @@ Rails.application.routes.draw do
 
       get '/timelines/home',     to: 'timelines#home', as: :home_timeline
       get '/timelines/public',   to: 'timelines#public', as: :public_timeline
+      get '/timelines/fan/:id',  to: 'timelines#fan', as: :fan_timeline
       get '/timelines/tag/:id',  to: 'timelines#tag', as: :hashtag_timeline
 
       get '/search', to: 'search#index', as: :search

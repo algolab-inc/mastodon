@@ -129,6 +129,17 @@ class Status < ApplicationRecord
       account.nil? ? filter_timeline_default(query) : filter_timeline_default(filter_timeline(query, account))
     end
 
+    def as_fan_timeline(fan_target, account = nil)
+      query = joins('LEFT OUTER JOIN accounts ON statuses.account_id = accounts.id')
+              .where(visibility: :public)
+              .without_replies
+              .without_reblogs
+              .where('accounts.domain IS NULL')
+              .where('accounts.fan_target_id = ?', fan_target.id)
+
+      account.nil? ? filter_timeline_default(query) : filter_timeline_default(filter_timeline(query, account))
+    end
+
     def as_tag_timeline(tag, account = nil, local_only = false)
       query = tag.statuses
                  .joins('LEFT OUTER JOIN accounts ON statuses.account_id = accounts.id')

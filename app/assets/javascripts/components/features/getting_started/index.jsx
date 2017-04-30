@@ -29,9 +29,15 @@ const GettingStarted = ({ intl, me }) => {
     followRequests = <ColumnLink icon='users' text={intl.formatMessage(messages.follow_requests)} to='/follow_requests' />;
   }
 
+  let fanTimeline = '';
+  if (me.get('fan_target')) {
+    fanTimeline = <ColumnLink icon='heart' text={me.getIn(['fan_target', 'name'])} to={'timelines/fan/' + me.getIn(['fan_target', 'name'])} />;
+  }
+
   return (
     <Column icon='asterisk' heading={intl.formatMessage(messages.heading)}>
       <div style={{ position: 'relative' }}>
+        {fanTimeline}
         <ColumnLink icon='users' text={intl.formatMessage(messages.community_timeline)} to='/timelines/public/local' />
         <ColumnLink icon='globe' text={intl.formatMessage(messages.public_timeline)} to='/timelines/public' />
         <ColumnLink icon='cog' text={intl.formatMessage(messages.preferences)} href='/settings/preferences' />

@@ -22,6 +22,7 @@ class FanOutOnWriteService < BaseService
     return if status.reply? && status.in_reply_to_account_id != status.account_id
 
     deliver_to_public(status)
+    deliver_to_fan(status) if status.local? && status.account.fan_target
   end
 
   private
@@ -68,5 +69,10 @@ class FanOutOnWriteService < BaseService
 
     Redis.current.publish('timeline:public', @payload)
     Redis.current.publish('timeline:public:local', @payload) if status.local?
+  end
+
+  def deliver_to_fan(status)
+    Rails.logger.debug "Delivering status #{status.account.fan_target.name} to fan"
+    Redis.current.publish("timeline:fan:#{status.account.fan_target.name}", @payload)
   end
 end
