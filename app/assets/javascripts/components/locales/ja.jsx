@@ -32,6 +32,7 @@ const ja = {
   "compose_form.spoiler_placeholder": "閲覧注意",
   "emoji_button.label": "絵文字を追加",
   "empty_column.community": "ローカルタイムラインはまだ使われていません。何か書いてみましょう！",
+  "empty_column.fan": "このファンタイムラインはまだ使われていません。",
   "empty_column.hashtag": "このハッシュタグはまだ使われていません。",
   "empty_column.home": "まだ誰もフォローしていません。{public}を見に行くか、検索を使って他のユーザーを見つけましょう。",
   "empty_column.home.public_timeline": "連合タイムライン",

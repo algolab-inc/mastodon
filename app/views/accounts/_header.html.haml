@@ -16,7 +16,9 @@
       %span= "@#{account.username}"
       = fa_icon('lock') if account.locked?
     - if account.fan_target
-      %small= image_tag account.fan_target.icon_path, size: '24x24'
+      %small
+        = link_to fan_url(account.fan_target.name) do
+          = image_tag account.fan_target.icon_url, size: '24x24'
 
   .details
     .bio

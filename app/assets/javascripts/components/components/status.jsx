@@ -89,8 +89,8 @@ const Status = React.createClass({
     }
 
     let fanTargetIcon='';
-    if (status.getIn(['account', 'acct']) === status.getIn(['account', 'username']) && status.getIn(['account', 'fan_target_icon'])) {
-      fanTargetIcon = <div style={{ position: 'absolute', right: '10px', bottom: '10px', width: '24px', height: '24px' }}><FanTargetIcon src={status.getIn(['account', 'fan_target_icon'])} size={24} /></div>;
+    if (status.getIn(['account', 'acct']) === status.getIn(['account', 'username']) && status.getIn(['account', 'fan_target'])) {
+      fanTargetIcon = <div style={{ position: 'absolute', right: '10px', bottom: '10px', width: '24px', height: '24px' }}><FanTargetIcon fanTarget={status.getIn(['account', 'fan_target'])} size={24} /></div>;
     }
 
     return (

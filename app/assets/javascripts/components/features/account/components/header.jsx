@@ -125,8 +125,8 @@ const Header = React.createClass({
     }
 
     let fanTargetIcon='';
-    if (account.get('acct') === account.get('username') && account.get('fan_target_icon')) {
-      fanTargetIcon = <div style={{ marginBottom: '10px' }}><FanTargetIcon src={account.get('fan_target_icon')} size={24} /></div>;
+    if (account.get('acct') === account.get('username') && account.get('fan_target')) {
+      fanTargetIcon = <div style={{ marginBottom: '10px' }}><FanTargetIcon fanTarget={account.get('fan_target')} size={24} /></div>;
     }
 
     const content         = { __html: emojify(account.get('note')) };

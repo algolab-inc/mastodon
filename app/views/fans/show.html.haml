@@ -1,0 +1,20 @@
+- content_for :page_title do
+  = @fan_target.name
+
+.compact-header
+  %h1<
+    = link_to site_title, root_path
+    %small
+      %i.fa.fa-heart
+      = @fan_target.name
+
+- if @statuses.empty?
+  .accounts-grid
+    = render partial: 'accounts/nothing_here'
+- else
+  .activity-stream.h-feed
+    = render partial: 'stream_entries/status', collection: @statuses, as: :status
+
+- if @statuses.size == 20
+  .pagination
+    = link_to safe_join([t('pagination.next'), fa_icon('chevron-right')], ' '), fan_url(@fan_target.name, max_id: @statuses.last.id), class: 'next', rel: 'next'

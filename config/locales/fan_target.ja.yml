@@ -2,9 +2,11 @@
 ja:
   simple_form:
     placeholders:
-      custom:
+      fan_target:
         include_blank: 選択しない
     labels:
-      custom:
+      fan_target:
+        default:
+          fan_target_id: お気に入り
         npb:
           fan_target_id: お気に入り球団

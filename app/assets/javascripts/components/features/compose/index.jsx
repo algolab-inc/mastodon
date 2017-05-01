@@ -9,6 +9,7 @@ import { injectIntl, defineMessages } from 'react-intl';
 import SearchContainer from './containers/search_container';
 import { Motion, spring } from 'react-motion';
 import SearchResultsContainer from './containers/search_results_container';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 const messages = defineMessages({
   start: { id: 'getting_started.heading', defaultMessage: 'Getting started' },
@@ -19,7 +20,8 @@ const messages = defineMessages({
 });
 
 const mapStateToProps = state => ({
-  showSearch: state.getIn(['search', 'submitted']) && !state.getIn(['search', 'hidden'])
+  showSearch: state.getIn(['search', 'submitted']) && !state.getIn(['search', 'hidden']),
+  me: state.getIn(['accounts', state.getIn(['meta', 'me'])])
 });
 
 const Compose = React.createClass({
@@ -28,7 +30,8 @@ const Compose = React.createClass({
     dispatch: React.PropTypes.func.isRequired,
     withHeader: React.PropTypes.bool,
     showSearch: React.PropTypes.bool,
-    intl: React.PropTypes.object.isRequired
+    intl: React.PropTypes.object.isRequired,
+    me: ImmutablePropTypes.map.isRequired
   },
 
   mixins: [PureRenderMixin],
@@ -42,18 +45,24 @@ const Compose = React.createClass({
   },
 
   render () {
-    const { withHeader, showSearch, intl } = this.props;
+    const { withHeader, showSearch, intl, me } = this.props;
 
     let header = '';
 
     if (withHeader) {
+      let fanTargetLink = '';
+      if (me.get('fan_target')) {
+        fanTargetLink = <Link title={ me.getIn(['fan_target', 'name'])} className='drawer__tab' to={ '/timelines/fan/' + me.getIn(['fan_target', 'name'])}><i className='fa fa-heart' /></Link>
+      }
+
       header = (
         <div className='drawer__header'>
-          <Link title={intl.formatMessage(messages.start)} className='drawer__tab' to='/getting-started'><i className='fa fa-fw fa-asterisk' /></Link>
-          <Link title={intl.formatMessage(messages.community)} className='drawer__tab' to='/timelines/public/local'><i className='fa fa-fw fa-users' /></Link>
-          <Link title={intl.formatMessage(messages.public)} className='drawer__tab' to='/timelines/public'><i className='fa fa-fw fa-globe' /></Link>
-          <a title={intl.formatMessage(messages.preferences)} className='drawer__tab' href='/settings/preferences'><i className='fa fa-fw fa-cog' /></a>
-          <a title={intl.formatMessage(messages.logout)} className='drawer__tab' href='/auth/sign_out' data-method='delete'><i className='fa fa-fw fa-sign-out' /></a>
+          <Link title={intl.formatMessage(messages.start)} className='drawer__tab' to='/getting-started'><i className='fa fa-asterisk' /></Link>
+          {fanTargetLink}
+          <Link title={intl.formatMessage(messages.community)} className='drawer__tab' to='/timelines/public/local'><i className='fa fa-users' /></Link>
+          <Link title={intl.formatMessage(messages.public)} className='drawer__tab' to='/timelines/public'><i className='fa fa-globe' /></Link>
+          <a title={intl.formatMessage(messages.preferences)} className='drawer__tab' href='/settings/preferences'><i className='fa fa-cog' /></a>
+          <a title={intl.formatMessage(messages.logout)} className='drawer__tab' href='/auth/sign_out' data-method='delete'><i className='fa fa-sign-out' /></a>
         </div>
       );
     }

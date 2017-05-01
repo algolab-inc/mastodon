@@ -17,8 +17,8 @@ const NavigationBar = React.createClass({
 
   render () {
     let fanTargetIcon='';
-    if (this.props.account.get('acct') === this.props.account.get('username') && this.props.account.get('fan_target_icon')) {
-      fanTargetIcon = <div style={{ position: 'absolute', right: '0px', bottom: '0px', width: '24px', height: '24px' }}><FanTargetIcon src={this.props.account.get('fan_target_icon')} size={24} /></div>;
+    if (this.props.account.get('acct') === this.props.account.get('username') && this.props.account.get('fan_target')) {
+      fanTargetIcon = <div style={{ position: 'absolute', right: '0px', bottom: '0px', width: '24px', height: '24px' }}><FanTargetIcon fanTarget={this.props.account.get('fan_target')} size={24} /></div>;
     }
 
     return (

@@ -23,10 +23,10 @@
     = account_fields.association :fan_target,
       collection: FanTarget.all.sort_by(&:order),
       wrapper: :with_label,
-      label: t("simple_form.labels.custom.#{ENV.fetch('FAN_TARGET', 'npb')}.fan_target_id"),
+      label: t("simple_form.labels.fan_target.#{ENV.fetch('FAN_TARGET', 'default')}.fan_target_id"),
       label_html: { style: 'width: 50%' },
       input_html: { style: 'width: 50%' },
-      include_blank: t('simple_form.placeholders.custom.include_blank')
+      include_blank: t('simple_form.placeholders.fan_target.include_blank')
 
   .actions
     = f.button :button, t('about.get_started'), type: :submit

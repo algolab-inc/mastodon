@@ -34,6 +34,21 @@ class Api::V1::TimelinesController < ApiController
     render :index
   end
 
+  def fan
+    @fan_target = FanTarget.find_by(name: params[:id])
+    @statuses = @fan_target.nil? ? [] : Status.as_fan_timeline(@fan_target, current_account).paginate_by_max_id(limit_param(DEFAULT_STATUSES_LIMIT), params[:max_id], params[:since_id])
+    @statuses = cache_collection(@statuses)
+
+    set_maps(@statuses)
+
+    next_path = api_v1_fan_timeline_url(params[:id], pagination_params(max_id: @statuses.last.id))    unless @statuses.empty?
+    prev_path = api_v1_fan_timeline_url(params[:id], pagination_params(since_id: @statuses.first.id)) unless @statuses.empty?
+
+    set_pagination_headers(next_path, prev_path)
+
+    render :index
+  end
+
   def tag
     @tag      = Tag.find_by(name: params[:id].downcase)
     @statuses = @tag.nil? ? [] : Status.as_tag_timeline(@tag, current_account, params[:local]).paginate_by_max_id(limit_param(DEFAULT_STATUSES_LIMIT), params[:max_id], params[:since_id])
@@ -56,6 +71,6 @@ class Api::V1::TimelinesController < ApiController
   end
 
   def pagination_params(core_params)
-    params.permit(:local, :limit).merge(core_params)
+    params.permit(:local, :limit, :id).merge(core_params)
   end
 end

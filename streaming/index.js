@@ -284,6 +284,10 @@ if (cluster.isMaster) {
     streamFrom('timeline:public:local', req, streamToHttp(req, res), streamHttpEnd(req), true)
   })
 
+  app.get('/api/v1/streaming/fan', (req, res) => {
+    streamFrom(`timeline:fan:${req.params.fan}`, req, streamToHttp(req, res), streamHttpEnd(req), true)
+  })
+
   app.get('/api/v1/streaming/hashtag', (req, res) => {
     streamFrom(`timeline:hashtag:${req.params.tag}`, req, streamToHttp(req, res), streamHttpEnd(req), true)
   })
@@ -313,6 +317,9 @@ if (cluster.isMaster) {
         break;
       case 'public:local':
         streamFrom('timeline:public:local', req, streamToWs(req, ws), streamWsEnd(ws), true)
+        break;
+      case 'fan':
+        streamFrom(`timeline:fan:${location.query.fan}`, req, streamToWs(req, ws), streamWsEnd(ws), true)
         break;
       case 'hashtag':
         streamFrom(`timeline:hashtag:${location.query.tag}`, req, streamToWs(req, ws), streamWsEnd(ws), true)

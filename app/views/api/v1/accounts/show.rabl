@@ -8,6 +8,10 @@ node(:avatar)          { |account| full_asset_url(account.avatar_original_url) }
 node(:avatar_static)   { |account| full_asset_url(account.avatar_static_url) }
 node(:header)          { |account| full_asset_url(account.header_original_url) }
 node(:header_static)   { |account| full_asset_url(account.header_static_url) }
-node(:fan_target_icon, if: lambda { |account| account.fan_target }) { |account| asset_path(account.fan_target.icon_path) }
 
 attributes :followers_count, :following_count, :statuses_count
+
+child :fan_target, if: lambda { |account| account.fan_target } do
+  attributes :name, :icon_url
+  node(:url) { |fan_target| fan_url(fan_target.name) }
+end

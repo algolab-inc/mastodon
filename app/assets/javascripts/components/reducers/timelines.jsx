@@ -67,6 +67,17 @@ const initialState = Immutable.Map({
     items: Immutable.List()
   }),
 
+  fan: Immutable.Map({
+    path: (id) => `/api/v1/timelines/fan/${id}`,
+    next: null,
+    isLoading: false,
+    online: false,
+    loaded: false,
+    top: true,
+    unread: 0,
+    items: Immutable.List()
+  }),
+
   tag: Immutable.Map({
     path: (id) => `/api/v1/timelines/tag/${id}`,
     next: null,
@@ -199,7 +210,7 @@ const deleteStatus = (state, id, accountId, references, reblogOf) => {
   }
 
   // Remove references from timelines
-  ['home', 'public', 'community', 'tag'].forEach(function (timeline) {
+  ['home', 'public', 'community', 'fan', 'tag'].forEach(function (timeline) {
     state = state.updateIn([timeline, 'items'], list => list.filterNot(item => item === id));
   });
 
@@ -251,7 +262,7 @@ const normalizeContext = (state, id, ancestors, descendants) => {
 };
 
 const resetTimeline = (state, timeline, id) => {
-  if (timeline === 'tag' && typeof id !== 'undefined' && state.getIn([timeline, 'id']) !== id) {
+  if ((timeline === 'tag' || timeline === 'fan') && typeof id !== 'undefined' && state.getIn([timeline, 'id']) !== id) {
     state = state.update(timeline, map => map
         .set('id', id)
         .set('isLoading', true)
