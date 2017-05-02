@@ -12,6 +12,6 @@ node(:header_static)   { |account| full_asset_url(account.header_static_url) }
 attributes :followers_count, :following_count, :statuses_count
 
 child :fan_target, if: lambda { |account| account.fan_target } do
-  attributes :name, :icon_url
+  attributes :name, :icon_path
   node(:url) { |fan_target| fan_url(fan_target.name) }
 end

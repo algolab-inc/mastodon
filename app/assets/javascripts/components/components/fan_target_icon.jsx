@@ -21,7 +21,7 @@ const FanTargetIcon = React.createClass({
     const fanTarget = this.props.fanTarget;
     return (
       <a href={fanTarget.get('url')} onClick={this.handleFanTargetClick.bind(this, fanTarget.get('name'))}>
-        <img src={fanTarget.get('icon_url')} width={this.props.size} height={this.props.size} />
+        <img src={fanTarget.get('icon_path')} width={this.props.size} height={this.props.size} />
       </a>
     )
   }
