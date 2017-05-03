@@ -11,7 +11,8 @@ if ENV['FAN_TARGET']
     User.create!(
       account: Account.new(
         username: data['username'],
-        avatar: data['avatar'] ? File.open(data['avatar']) : nil
+        avatar: data['avatar'] ? File.open(data['avatar']) : nil,
+        fan_target_id: data['fan_target_id']
       ),
       email: data['email'],
       password: data['password'],
