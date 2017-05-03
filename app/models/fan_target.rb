@@ -6,6 +6,6 @@ class FanTarget < ActiveYaml::Base
   has_many :statuses, through: :accounts
 
   def icon_path
-    ActionController::Base.helpers.asset_path("fan-target/#{ENV.fetch('FAN_TARGET', 'default')}/#{key}-icon.png")
+    ActionController::Base.helpers.asset_path("fan-target/#{ENV.fetch('FAN_TARGET', 'default')}/#{key}-48x48.png")
   end
 end
